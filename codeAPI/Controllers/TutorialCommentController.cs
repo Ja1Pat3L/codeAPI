@@ -23,24 +23,23 @@ namespace codeAPI.Controllers
 
         [HttpGet]
         [Route("/api/commentsfortutorial{tutorial_id}")]
-        
+
         public async Task<IActionResult> GetTutorialComments(int tutorial_id)
         {
             var info = await _codeRepository.GetTutorialComments(tutorial_id);
-                var result=_mapper.Map<IEnumerable<TutorialComment>>(info);
-            return Ok (result);
-     
+            var result = _mapper.Map<IEnumerable<TutorialComment>>(info);
+            return Ok(result);
+
         }
 
         [HttpPost("/api/newcommentfortutorial")]
         public async Task<ActionResult<TutorialCommentDto>> CreateTutorial(
          [FromBody] TutorialCommentForCreateDto comment)
         {
+
             if (comment == null) return BadRequest();
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            /*   if (!await _cityInfoRepository.CityExists(cityId)) return NotFound();*/
 
             var finalTutorial = _mapper.Map<TutorialComment>(comment);
 
@@ -53,7 +52,7 @@ namespace codeAPI.Controllers
 
             var createdTutorialcomment = _mapper.Map<TutorialCommentDto>(finalTutorial);
 
-            return CreatedAtAction("GetTutorialInfo", createdTutorialcomment);
+            return CreatedAtAction("newcommentfortutorial", createdTutorialcomment);
         }
 
         [HttpPut("{id}/updatecomment")]
@@ -79,7 +78,7 @@ namespace codeAPI.Controllers
         }
 
         //
-/*
+
         [HttpDelete("{tutorialId}/api/comment/")]
         public async Task<IActionResult> DeleteTutorialComment(int tutorial_Id)
         {
@@ -89,16 +88,17 @@ namespace codeAPI.Controllers
 
 
 
-            _codeRepository.DeleteTutorialComment(entity);
+/*           _codeRepository.DeleteTutorialComment(entity);*/
 
             if (!await _codeRepository.Save())
             {
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            return NoContent();*/
+            return NoContent();
 
         }
 
     }
+}
 

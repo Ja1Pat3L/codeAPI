@@ -165,5 +165,28 @@ namespace codeAPI.Services
             return await result.ToListAsync();
                 
         }
+
+        public void AddClientTutorial(ClientTutorial clienttutorial)
+        {
+            try
+            {
+
+                DBContext.ClientTutorials.Add(clienttutorial);
+            }
+            catch
+            {
+
+            }
+
+
+        }
+
+        public void DeleteClientTutorial(ClientTutorial clientTutorial)
+        {
+            DBContext.ClientTutorials.Remove(clientTutorial);
+        }
+
+
+
     }
 }

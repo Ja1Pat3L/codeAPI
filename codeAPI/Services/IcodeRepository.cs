@@ -28,6 +28,10 @@ namespace codeAPI.Services
         void DeleteTutorialComment(TutorialComment tutorialcomment);
 
         Task <IEnumerable<ClientTutorial>> GetClientTutorials(int client_id);
+
+        void AddClientTutorial(ClientTutorial clienttutorial);
+
+        void DeleteClientTutorial(ClientTutorial clienttutorial);
         Task<bool> Save();
        // Task AddTutorial(TutorialDto finalTutorial);
     }
