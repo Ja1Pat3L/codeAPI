@@ -105,12 +105,11 @@ namespace codeAPI.Controllers
         {
             if (!await _codeRepository.ClientExists(ClientId)) return NotFound();
 
-            var tutorialEntityForClient = await _codeRepository.GetClientById(ClientId);
-            if (tutorialEntityForClient == null) return NotFound();
+            var entity = await _codeRepository.GetClientById(ClientId);
+            if (entity == null) return NotFound();
 
-            //_cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
 
-            _codeRepository.DeleteClient(tutorialEntityForClient);
+            _codeRepository.DeleteClient(entity);
 
             if (!await _codeRepository.Save())
             {
