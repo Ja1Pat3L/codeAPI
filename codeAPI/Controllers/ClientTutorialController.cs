@@ -32,8 +32,10 @@ namespace codeAPI.Controllers
             if(clientTutorialInfo==null)
                 return NotFound();
             
-            var result = _mapper.Map<ClientTutorialDto>(clientTutorialInfo);
+            var result = _mapper.Map<IEnumerable<ClientTutorialDto>>(clientTutorialInfo);
             return Ok(result);
+
+
         }
     }
 }

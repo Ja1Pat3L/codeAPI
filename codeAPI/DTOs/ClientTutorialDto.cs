@@ -9,5 +9,6 @@ namespace codeAPI.DTOs
         public int? TutorialId { get; set; }
 
         public virtual Client Client { get; set; }
+
     }
 }

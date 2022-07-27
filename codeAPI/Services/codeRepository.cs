@@ -161,7 +161,7 @@ namespace codeAPI.Services
         public async Task<IEnumerable<ClientTutorial>> GetClientTutorials(int client_id)
         {
             IQueryable<ClientTutorial> result;
-            result = DBContext.ClientTutorials.Where(t => t.Id == client_id);
+            result = DBContext.ClientTutorials.Where(t => t.ClientId == client_id);
             return await result.ToListAsync();
                 
         }
