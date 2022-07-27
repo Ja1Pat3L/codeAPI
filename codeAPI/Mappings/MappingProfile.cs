@@ -9,13 +9,13 @@ namespace codeAPI.Mappings
         public MappingProfile()
         {
             //
-            CreateMap<Tutorial, TutoriaCommentsDto>();
+            CreateMap<Tutorial, TutorialDto>();
             CreateMap<TutorialForCreateDto, Tutorial>();
-            CreateMap<TutorialForUpdateDto, TutoriaCommentsDto>();
+            CreateMap<TutorialForUpdateDto, TutorialDto>();
             CreateMap<TutorialForUpdateDto, Tutorial>();
             CreateMap<Client, ClientDto>();
             CreateMap<ClientForCreateDto, Client>();
-            CreateMap<TutorialCommmentForUpdateDto, Client>();
+            CreateMap<ClientForUpdateDto, Client>();
             CreateMap<TutorialComment,TutorialCommentDto>();
             CreateMap<TutorialCommentForCreateDto, TutorialCommentDto>();
             CreateMap<TutorialCommentForUpdateDto, TutorialCommentDto>();

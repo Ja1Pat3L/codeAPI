@@ -69,14 +69,14 @@ namespace codeAPI.Controllers
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            var createdTutorial = _mapper.Map<TutoriaCommentsDto>(finalClient);
+            var createdTutorial = _mapper.Map<TutorialDto>(finalClient);
 
             return CreatedAtAction("GetTutorialInfo", createdTutorial);
         }
 
         
         [HttpPut("{id}/updateclient")]
-        public async Task<ActionResult> UpdateClient(int id, [FromBody] TutorialCommmentForUpdateDto client)
+        public async Task<ActionResult> UpdateClient(int id, [FromBody] ClientForUpdateDto client)
         {
             if (client == null) return BadRequest();
 

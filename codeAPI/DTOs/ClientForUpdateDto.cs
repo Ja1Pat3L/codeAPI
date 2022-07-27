@@ -2,7 +2,7 @@
 
 namespace codeAPI.DTOs
 {
-    public class TutorialCommmentForUpdateDto
+    public class ClientForUpdateDto
     {
         [Required(ErrorMessage = "Client name required")]
         public string ClientName { get; set; }

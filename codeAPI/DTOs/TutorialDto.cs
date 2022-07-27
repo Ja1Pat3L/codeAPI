@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace codeAPI.DTOs
 {
-    public class TutoriaCommentsDto
+    public class TutorialDto
     {
         public int TutorialId { get; set; }
         public string TutorialName { get; set; }
