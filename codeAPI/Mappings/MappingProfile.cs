@@ -9,9 +9,9 @@ namespace codeAPI.Mappings
         public MappingProfile()
         {
             //
-            CreateMap<Tutorial, TutorialDto>();
+            CreateMap<Tutorial, TutoriaCommentsDto>();
             CreateMap<TutorialForCreateDto, Tutorial>();
-            CreateMap<TutorialForUpdateDto, TutorialDto>();
+            CreateMap<TutorialForUpdateDto, TutoriaCommentsDto>();
             CreateMap<TutorialForUpdateDto, Tutorial>();
             CreateMap<Client, ClientDto>();
             CreateMap<ClientForCreateDto, Client>();

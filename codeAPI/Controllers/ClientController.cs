@@ -69,7 +69,7 @@ namespace codeAPI.Controllers
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            var createdTutorial = _mapper.Map<TutorialDto>(finalClient);
+            var createdTutorial = _mapper.Map<TutoriaCommentsDto>(finalClient);
 
             return CreatedAtAction("GetTutorialInfo", createdTutorial);
         }

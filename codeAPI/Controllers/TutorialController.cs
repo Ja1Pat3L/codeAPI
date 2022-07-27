@@ -25,7 +25,7 @@ namespace codeAPI.Controllers
         public async Task<IActionResult> GetTutorialInfo()
         {
             var tutorialInfo = await _codeRepository.GetTutorialInfo();
-            var result = _mapper.Map<IEnumerable<TutorialDto>>(tutorialInfo);
+            var result = _mapper.Map<IEnumerable<TutoriaCommentsDto>>(tutorialInfo);
             return Ok(result);
         }
 
@@ -38,12 +38,12 @@ namespace codeAPI.Controllers
             if(tutorialInfo == null)    
                 return NotFound();
            
-            var result = _mapper.Map<TutorialDto>(tutorialInfo);
+            var result = _mapper.Map<TutoriaCommentsDto>(tutorialInfo);
             return Ok(result);
         }
 
         [HttpPost("/api/newTutorial")]
-        public async Task<ActionResult<TutorialDto>> CreateTutorial(
+        public async Task<ActionResult<TutoriaCommentsDto>> CreateTutorial(
          [FromBody] TutorialForCreateDto tutorial)
         {
             if (tutorial == null) return BadRequest();
@@ -66,7 +66,7 @@ namespace codeAPI.Controllers
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            var createdTutorial= _mapper.Map<TutorialDto>(finalTutorial);
+            var createdTutorial= _mapper.Map<TutoriaCommentsDto>(finalTutorial);
 
             return CreatedAtAction("GetTutorialInfo", createdTutorial);
         }
