@@ -147,7 +147,7 @@ namespace codeAPI.Services
         public async Task<IEnumerable<TutorialComment>> GetTutorialComments(int tutorial_id)
         {
             IQueryable<TutorialComment> result;
-            result = DBContext.TutorialComments.Where(t => t.Id == tutorial_id);
+            result = DBContext.TutorialComments.Where(t => t.TutorialId == tutorial_id);
             return await result.ToListAsync();
         }
     

@@ -15,7 +15,7 @@ namespace codeAPI.Mappings
             CreateMap<TutorialForUpdateDto, Tutorial>();
             CreateMap<Client, ClientDto>();
             CreateMap<ClientForCreateDto, Client>();
-            CreateMap<ClientForUpdateDto, Client>();
+            CreateMap<TutorialCommmentForUpdateDto, Client>();
             CreateMap<TutorialComment,TutorialCommentDto>();
             CreateMap<TutorialCommentForCreateDto, TutorialCommentDto>();
             CreateMap<TutorialCommentForUpdateDto, TutorialCommentDto>();

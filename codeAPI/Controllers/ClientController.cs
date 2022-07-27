@@ -76,7 +76,7 @@ namespace codeAPI.Controllers
 
         
         [HttpPut("{id}/updateclient")]
-        public async Task<ActionResult> UpdateClient(int id, [FromBody] ClientForUpdateDto client)
+        public async Task<ActionResult> UpdateClient(int id, [FromBody] TutorialCommmentForUpdateDto client)
         {
             if (client == null) return BadRequest();
 

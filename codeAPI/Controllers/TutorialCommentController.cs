@@ -32,27 +32,72 @@ namespace codeAPI.Controllers
      
         }
 
-        //[HttpPost("/api/newcommentfortutorial{}")]
-        //public async Task<ActionResult<TutoriaCommentsDto>> CreateCommentsl(
-        // [FromBody] TutorialCommentForCreateDto comment)
-        //{
-        //    if (comment == null) return BadRequest();
+        [HttpPost("/api/newcommentfortutorial")]
+        public async Task<ActionResult<TutoriaCommentsDto>> CreateCommentsl(
+         [FromBody] TutorialCommentForCreateDto comment)
+        {
+            if (comment == null) return BadRequest();
 
-        //    if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        //    var finalcomment = _mapper.Map<TutorialComment>(comment);
+            var finalcomment = _mapper.Map<TutorialComment>(comment);
 
-        //    _codeRepository.AddTutorialComment(finalcomment);
+            _codeRepository.AddTutorialComment(finalcomment);
 
-        //    if (!await _codeRepository.Save())
-        //    {
-        //        return StatusCode(500, "A problem happened while handling your request");
-        //    }
+            if (!await _codeRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request");
+            }
 
-        //    var createdTutorial = _mapper.Map<TutoriaCommentsDto>(finalcomment);
+            var createdTutorial = _mapper.Map<TutoriaCommentsDto>(finalcomment);
 
-        //    return CreatedAtAction("GetTutorial", createdTutorial);
-        //}
+            return CreatedAtAction("GetTutorial", createdTutorial);
+        }
+
+        [HttpPut("{id}/updatecomment")]
+        public async Task<ActionResult> UpdateComment(int id, [FromBody] TutorialCommmentForUpdateDto comment)
+        {
+            if (comment == null) return BadRequest();
+
+
+            if (!ModelState.IsValid) return BadRequest();
+
+            if (!await _codeRepository.ClientExists(id)) return NotFound();
+
+            var TutorialCommentEntity = await _codeRepository.GetTutorialComments(id);
+            if (comment == null) return NotFound();
+
+            _mapper.Map(comment, TutorialCommentEntity);
+
+            if (!await _codeRepository.Save())
+            {
+                return StatusCode(500, "A problem ocurred while handling your request");
+            }
+
+            return NoContent();
+        }
+
+        
+        [HttpDelete("{Id}/api/comment/")]
+        public async Task<IActionResult> DeleteTutorial(int id)
+        {
+            if (!await _codeRepository.ClientExists(id)) return NotFound();
+
+            var tutorialEntityForClient = await _codeRepository.GetClientById(id);
+            if (tutorialEntityForClient == null) return NotFound();
+
+            //_cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
+
+            _codeRepository.DeleteClient(tutorialEntityForClient);
+
+            if (!await _codeRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request");
+            }
+
+            return NoContent();
+
+        }
 
 
 
