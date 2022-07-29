@@ -49,12 +49,12 @@ namespace codeAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+            env.IsDevelopment();
+            
+           
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "codeAPI v1"));
-            }
+            
 
             app.UseHttpsRedirection();
 
