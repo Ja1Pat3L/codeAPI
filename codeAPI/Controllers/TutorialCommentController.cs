@@ -68,35 +68,6 @@ namespace codeAPI.Controllers
         }
         #endregion
 
-        /*Method- I think we dont need this*/
-        #region PUT COMMENT
-
-        /*Update not working error mapping */
-
-        [HttpPut("{client_id}/updatecomment/{tutorial_id}")]
-        public async Task<ActionResult> UpdateClient([FromBody] TutorialCommentForUpdateDto comment)
-        {
-            if (comment == null) return BadRequest();
-
-
-            if (!ModelState.IsValid) return BadRequest();
-
-
-            var commentEntity = await _codeRepository.GetTutorialCommentsForClient((int)comment.ClientId, (int)comment.TutorialId);
-            if (comment == null) return NotFound();
-
-            _mapper.Map(comment, commentEntity);
-
-            if (!await _codeRepository.Save())
-            {
-                return StatusCode(500, "A problem ocurred while handling your request");
-            }
-
-            return NoContent();
-        }
-
-        #endregion
-
         /*Method- Delete Comment using Client Id and Tutorial Id*/
         #region DELETE COMMENT
         [HttpDelete("/api/comment/{client_id}/{tutorial_id}")]
