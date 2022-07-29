@@ -13,16 +13,21 @@ namespace codeAPI.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
+        #region INSTANCES
         private IcodeRepository _codeRepository;
         private Client finalclient;
         private readonly IMapper _mapper;
+        #endregion
 
+        #region CONSTRUCTOR
         public ClientController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
 
+        #region GET CLIENT
         [HttpGet]
         [Route("/api/clients")]
         public async Task<IActionResult> GetClientInfo()
@@ -46,8 +51,9 @@ namespace codeAPI.Controllers
             return Ok(result);
         }
 
-        //
+        #endregion
 
+        #region POST CLIENT
         [HttpPost("/api/newClient")]
         public async Task<ActionResult<ClientDto>> CreateClient(
      [FromBody] ClientForCreateDto client)
@@ -69,12 +75,13 @@ namespace codeAPI.Controllers
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            var Createdclient = _mapper.Map<TutorialDto>(finalClient);
+            var Createdclient = _mapper.Map<ClientForCreateDto>(finalClient);
 
-            return CreatedAtAction("GetTutorialInfo", Createdclient);
+            return Ok(Createdclient);
         }
+        #endregion
 
-        
+        #region PUT CLIENT
         [HttpPut("{id}/updateclient")]
         public async Task<ActionResult> UpdateClient(int id, [FromBody] ClientForUpdateDto client)
         {
@@ -97,11 +104,11 @@ namespace codeAPI.Controllers
 
             return NoContent();
         }
+        #endregion
 
-        //
-
+        #region DELETE CLIENT 
         [HttpDelete("{ClientId}/api/client/")]
-        public async Task<IActionResult> DeleteTutorial(int ClientId)
+        public async Task<IActionResult> DeleteClient(int ClientId)
         {
             if (!await _codeRepository.ClientExists(ClientId)) return NotFound();
 
@@ -119,6 +126,7 @@ namespace codeAPI.Controllers
             return NoContent();
 
         }
+        #endregion
 
     }
 }

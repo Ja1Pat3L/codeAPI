@@ -11,18 +11,28 @@ namespace codeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+    
     public class ClientTutorialController : ControllerBase
     {
 
+        #region INSTANCES
 
         private IcodeRepository _codeRepository;
+        private Client finalclient;
         private readonly IMapper _mapper;
 
+        #endregion
+
+        #region CONSTRUCTOR
         public ClientTutorialController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
+
+        #region GET CLIENT TUTORIALS
 
         [HttpGet]
         [Route("/api/clientTutorials{client_id}")]
@@ -32,15 +42,17 @@ namespace codeAPI.Controllers
             if (clientTutorialInfo == null)
                 return NotFound();
 
-            var result = _mapper.Map<IEnumerable<ClientTutorialDto>>(clientTutorialInfo);
+            var result = _mapper.Map<IEnumerable<ClientTutorial>>(clientTutorialInfo);
             return Ok(result);
 
         }
+        #endregion
 
+        #region POST CLIENT TUTORIAL
         [HttpPost("/api/newClientTutorial")]
 
         public async Task<ActionResult<ClientTutorialDto>> AddClientTutorial(
-            [FromBody]ClientTutorialDto client_tutorial
+            [FromBody]ClientTutorialForCreateDto client_tutorial
             
             ) {
 
@@ -62,58 +74,32 @@ namespace codeAPI.Controllers
 
             var createdClientTutorial = _mapper.Map<ClientTutorialDto>(finalTutorial);
 
-            return CreatedAtAction("GetTutorialInfo", createdClientTutorial);
+            return Ok(createdClientTutorial);
 
         }
 
-    /*    [HttpPut("{id}/updatetutorial")]
-        public async Task<ActionResult> UpdateTutorial(int id, [FromBody] TutorialForUpdateDto tutorial)
-        {
-            if (tutorial == null) return BadRequest();
+        #endregion
 
-            if (tutorial.TutorialDescription == tutorial.TutorialName)
+        #region DELETE CLIENT TUTORIAL
+        
+            [HttpDelete("api/clienttutorial/{ClientId}/{TutorialId}")]
+            public async Task<IActionResult> DeleteTutorial(int ClientId, int TutorialId)
             {
-                ModelState.AddModelError(key: "Description", errorMessage: "The provided description should be different from the name.");
+               
+                var tutorialEntity = await _codeRepository.GetClientTutorial(ClientId, TutorialId);
+                if (tutorialEntity == null) return NotFound();
+
+
+                _codeRepository.DeleteClientTutorial(tutorialEntity);
+
+                if (!await _codeRepository.Save())
+                {
+                    return StatusCode(500, "A problem happened while handling your request");
+                }
+
+                return NoContent();
+
             }
-
-            if (!ModelState.IsValid) return BadRequest();
-
-            if (!await _codeRepository.TutorialExists(id)) return NotFound();
-
-            var tutorialEntity = await _codeRepository.GetTutorialById(id);
-            if (tutorial == null) return NotFound();
-
-            _mapper.Map(tutorial, tutorialEntity);
-
-            if (!await _codeRepository.Save())
-            {
-                return StatusCode(500, "A problem ocurred while handling your request");
-            }
-
-            return NoContent();
-        }
-
-
-        [HttpDelete("api/tutorial/{TutorialId}")]
-        public async Task<IActionResult> DeleteTutorial(int TutorialId)
-        {
-            if (!await _codeRepository.TutorialExists(TutorialId)) return NotFound();
-
-            var tutorialEntity = await _codeRepository.GetTutorialById(TutorialId);
-            if (tutorialEntity == null) return NotFound();
-
-            //_cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
-
-            _codeRepository.DeleteTutorial(tutorialEntity);
-
-            if (!await _codeRepository.Save())
-            {
-                return StatusCode(500, "A problem happened while handling your request");
-            }
-
-            return NoContent();
-
-        }*/
-
+        #endregion
     }
 }

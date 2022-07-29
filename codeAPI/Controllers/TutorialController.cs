@@ -13,6 +13,7 @@ namespace codeAPI.Controllers
     [ApiController]
     public class TutorialController : ControllerBase
     {
+        #region INSTANCES
         private IcodeRepository _codeRepository;
         private readonly IMapper _mapper;
         public TutorialController(IcodeRepository codeRepository, IMapper mapper)
@@ -20,6 +21,10 @@ namespace codeAPI.Controllers
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
+
+
+        #region GET TUTORIAL
         [HttpGet]
         [Route("/api/tutorials")]
         public async Task<IActionResult> GetTutorialInfo()
@@ -41,7 +46,10 @@ namespace codeAPI.Controllers
             var result = _mapper.Map<TutorialDto>(tutorialInfo);
             return Ok(result);
         }
+        #endregion
 
+
+        #region POST TUTORIAL
         [HttpPost("/api/newTutorial")]
         public async Task<ActionResult<TutorialDto>> CreateTutorial(
          [FromBody] TutorialForCreateDto tutorial)
@@ -70,6 +78,10 @@ namespace codeAPI.Controllers
 
             return CreatedAtAction("GetTutorialInfo", createdTutorial);
         }
+        #endregion
+
+
+        #region PUT TUTORIAL
 
         [HttpPut("{id}/updatetutorial")]
         public async Task<ActionResult> UpdateTutorial( int id, [FromBody] TutorialForUpdateDto tutorial)
@@ -97,7 +109,10 @@ namespace codeAPI.Controllers
 
             return NoContent();
         }
+        #endregion
 
+
+        #region DELETE TUTORIAL
 
         [HttpDelete("api/tutorial/{TutorialId}")]
         public async Task<IActionResult> DeleteTutorial( int TutorialId)
@@ -119,5 +134,6 @@ namespace codeAPI.Controllers
             return NoContent();
 
         }
+        #endregion
     }
 }

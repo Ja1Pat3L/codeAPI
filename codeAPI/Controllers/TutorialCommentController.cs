@@ -13,14 +13,21 @@ namespace codeAPI.Controllers
     [ApiController]
     public class TutorialCommentController : ControllerBase
     {
+
+        #region INSTANCES
         private IcodeRepository _codeRepository;
         private readonly IMapper _mapper;
+        #endregion
+
+        #region CONSTRUCTOR
         public TutorialCommentController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
 
+        #region GET COMMENT
         [HttpGet]
         [Route("/api/commentsfortutorial{tutorial_id}")]
 
@@ -31,9 +38,12 @@ namespace codeAPI.Controllers
             return Ok(result);
 
         }
+        #endregion
+
+        #region POST COMMENT
 
         [HttpPost("/api/newcommentfortutorial")]
-        public async Task<ActionResult<TutorialCommentDto>> CreateTutorial(
+        public async Task<ActionResult<TutorialCommentDto>> CreateTutorialComment(
          [FromBody] TutorialCommentForCreateDto comment)
         {
 
@@ -52,11 +62,16 @@ namespace codeAPI.Controllers
 
             var createdTutorialcomment = _mapper.Map<TutorialCommentDto>(finalTutorial);
 
-            return CreatedAtAction("newcommentfortutorial", createdTutorialcomment);
+            return Ok(createdTutorialcomment);
         }
+        #endregion
 
-        [HttpPut("{id}/updatecomment")]
-        public async Task<ActionResult> UpdateClient(int id, [FromBody] TutorialCommentForUpdateDto comment)
+        #region PUT COMMENT
+
+        /*Update not working error mapping */
+
+        [HttpPut("{client_id}/updatecomment/{tutorial_id}")]
+        public async Task<ActionResult> UpdateClient([FromBody] TutorialCommentForUpdateDto comment)
         {
             if (comment == null) return BadRequest();
 
@@ -64,7 +79,7 @@ namespace codeAPI.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
 
-            var commentEntity = await _codeRepository.GetTutorialComments(id);
+            var commentEntity = await _codeRepository.GetTutorialCommentsForClient((int)comment.ClientId, (int)comment.TutorialId);
             if (comment == null) return NotFound();
 
             _mapper.Map(comment, commentEntity);
@@ -77,18 +92,16 @@ namespace codeAPI.Controllers
             return NoContent();
         }
 
-        //
+        #endregion
 
-        [HttpDelete("{tutorialId}/api/comment/")]
-        public async Task<IActionResult> DeleteTutorialComment(int tutorial_Id)
+        #region DELETE COMMENT
+        [HttpDelete("/api/comment/{client_id}/{tutorial_id}")]
+        public async Task<IActionResult> DeleteTutorialComment(int client_id,int tutorial_id)
         {
 
-            var entity = await _codeRepository.GetTutorialComments(tutorial_Id);
+            var entity = await _codeRepository.GetTutorialCommentsForClient(client_id,tutorial_id);
             if (entity == null) return NotFound();
-
-
-
-/*           _codeRepository.DeleteTutorialComment(entity);*/
+            _codeRepository.DeleteTutorialComment(entity);
 
             if (!await _codeRepository.Save())
             {
@@ -98,6 +111,7 @@ namespace codeAPI.Controllers
             return NoContent();
 
         }
+        #endregion
 
     }
 }

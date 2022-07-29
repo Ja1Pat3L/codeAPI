@@ -75,12 +75,7 @@ namespace codeAPI.Services
             return await DBContext.Tutorials.AnyAsync<Tutorial>(c => c.TutorialId== id);
         }
 
-        public async Task<Client> GetTutorialForClient(int client_id, int tutorial_id)
-        {
-            IQueryable<Client> result = DBContext.Clients.Where(p => p.ClientId == client_id && p.TutorialId == tutorial_id);
-            return await result.FirstOrDefaultAsync();
-        }
-
+     
         public void DeleteTutorialForClient(Client client)
         {
             DBContext.Clients.Remove(client);
@@ -150,9 +145,24 @@ namespace codeAPI.Services
             result = DBContext.TutorialComments.Where(t => t.TutorialId == tutorial_id);
             return await result.ToListAsync();
         }
-    
+      /*  public async Task<TutorialComment> GetTutorialComments2(int tutorial_id)
+        {
+            IQueryable<TutorialComment> result;
+            result = DBContext.TutorialComments.Where(t => t.TutorialId == tutorial_id);
+            return await result.FirstOrDefaultAsync<>;
+        }*/
 
-      
+
+
+        public async Task<TutorialComment> GetTutorialCommentsForClient(int client_id,int tutorial_id)
+        {
+            IQueryable<TutorialComment> result;
+            result = DBContext.TutorialComments.Where(t => t.TutorialId == tutorial_id &&  t.ClientId == client_id) ;
+            return await result.FirstOrDefaultAsync();
+        }
+
+
+
         public void DeleteTutorialComment(TutorialComment tutorialcomment)
         {
             DBContext.TutorialComments.Remove(tutorialcomment);
@@ -164,6 +174,14 @@ namespace codeAPI.Services
             result = DBContext.ClientTutorials.Where(t => t.ClientId == client_id);
             return await result.ToListAsync();
                 
+        }
+
+        public async Task<ClientTutorial> GetClientTutorial(int client_id,int tutorial_id)
+        {
+            IQueryable<ClientTutorial> result;
+            result = DBContext.ClientTutorials.Where( t => t.ClientId==client_id && t.TutorialId == tutorial_id );
+            return await result.FirstOrDefaultAsync();
+
         }
 
         public void AddClientTutorial(ClientTutorial clienttutorial)
@@ -186,7 +204,9 @@ namespace codeAPI.Services
             DBContext.ClientTutorials.Remove(clientTutorial);
         }
 
-
-
+        public Task<Client> GetTutorialForClient(int client_id, int tutorial_id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

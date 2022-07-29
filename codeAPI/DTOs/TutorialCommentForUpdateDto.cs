@@ -4,14 +4,16 @@ namespace codeAPI.DTOs
 {
     public class TutorialCommentForUpdateDto
     {
-        public int Id { get; set; }
 
+        [Required(ErrorMessage = "Client Id Required")]
         public int ClientId { get; set; }
+
+
+        [Required(ErrorMessage = "Tutorial Id Required")]
         public int? TutorialId { get; set; }
 
-        [Required(ErrorMessage ="Comment Required")]
-        [MaxLength(1000)]
+        [Required(ErrorMessage ="Tutorial Comment Required")]
         public string TutorialComment1 { get; set; }
-        public DateTime? TutorialCommentTimestamp { get; set; }
+       
     }
 }
