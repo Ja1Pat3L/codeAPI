@@ -7,7 +7,7 @@ namespace FrontEnd.Helper
         public HttpClient initial()
         {
             var client = new HttpClient();
-            client.BaseAddress = new System.Uri("http://localhost:26044");
+            client.BaseAddress = new System.Uri("http://codeapi-dev.us-east-1.elasticbeanstalk.com/");
             return client;
         }
     }

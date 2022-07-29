@@ -57,6 +57,7 @@ namespace codeAPI
             }
 
             app.UseHttpsRedirection();
+           
 
             app.UseRouting();
 

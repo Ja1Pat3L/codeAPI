@@ -95,7 +95,7 @@ namespace FrontEnd.Controllers
             Client clients = new Client();
             using (HttpClient client = _api.initial())
             {
-                HttpResponseMessage response = await client.PutAsync("/api/Client/updateclient/{id}" + myClient.ClientId, content);
+                HttpResponseMessage response = await client.PutAsync("/api/Client/"+ myClient.ClientId+"/updateclient" , content);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadAsStringAsync().Result;
