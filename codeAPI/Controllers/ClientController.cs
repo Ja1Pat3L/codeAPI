@@ -13,28 +13,35 @@ namespace codeAPI.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
+        /*Instances Created for Repository (codeRepository) and Auto Mapper (IMapper)*/
+        #region INSTANCES
         private IcodeRepository _codeRepository;
-        private Client finalclient;
         private readonly IMapper _mapper;
+        #endregion
 
+        /*Class Constructor with above Instances as parameters*/
+        #region CONSTRUCTOR
         public ClientController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
 
+        /*Method- Getting List of Clients or Client using Client Id*/
+        #region GET CLIENT
         [HttpGet]
         [Route("/api/clients")]
         public async Task<IActionResult> GetClientInfo()
         {
-            var clientInfo = await _codeRepository.GetClientTutorials();
+            var clientInfo = await _codeRepository.GetClients();
             var result = _mapper.Map<IEnumerable<ClientDto>>(clientInfo);
             
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        //  [Route("/api/tutorial")]
+       
         public async Task<IActionResult> GetClientById(int id)
         {
 
@@ -45,9 +52,10 @@ namespace codeAPI.Controllers
             var result = _mapper.Map<ClientDto>(clientInfo);
             return Ok(result);
         }
+        #endregion
 
-        //
-
+        /*Method- Creating Client*/
+        #region POST CLIENT
         [HttpPost("/api/newClient")]
         public async Task<ActionResult<ClientDto>> CreateClient(
      [FromBody] ClientForCreateDto client)
@@ -58,8 +66,6 @@ namespace codeAPI.Controllers
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            //*   if (!await _cityInfoRepository.CityExists(cityId)) return NotFound();*//*
-
             var finalClient = _mapper.Map<Client>(client);
 
             _codeRepository.AddClient(finalClient);
@@ -69,18 +75,19 @@ namespace codeAPI.Controllers
                 return StatusCode(500, "A problem happened while handling your request");
             }
 
-            var createdTutorial = _mapper.Map<TutorialDto>(finalClient);
+            var Createdclient = _mapper.Map<ClientForCreateDto>(finalClient);
 
-            return CreatedAtAction("GetTutorialInfo", createdTutorial);
+            return Ok(Createdclient);
         }
+        #endregion
 
-        
+        /*Method- Updating Cliet using Client Id*/
+        #region PUT CLIENT
         [HttpPut("{id}/updateclient")]
         public async Task<ActionResult> UpdateClient(int id, [FromBody] ClientForUpdateDto client)
         {
             if (client == null) return BadRequest();
 
-    
             if (!ModelState.IsValid) return BadRequest();
 
             if (!await _codeRepository.ClientExists(id)) return NotFound();
@@ -97,11 +104,12 @@ namespace codeAPI.Controllers
 
             return NoContent();
         }
+        #endregion
 
-        //
-
+        /*Method- Deleting Client using Client Id*/
+        #region DELETE CLIENT 
         [HttpDelete("{ClientId}/api/client/")]
-        public async Task<IActionResult> DeleteTutorial(int ClientId)
+        public async Task<IActionResult> DeleteClient(int ClientId)
         {
             if (!await _codeRepository.ClientExists(ClientId)) return NotFound();
 
@@ -119,6 +127,7 @@ namespace codeAPI.Controllers
             return NoContent();
 
         }
+        #endregion
 
     }
 }

@@ -6,7 +6,6 @@ namespace codeAPI.DTOs
     public class TutorialCommentForCreateDto
     {
         
-        public int Id { get; set; }
 
         [Required(ErrorMessage= "Client ID Required" )]
         public int ClientId { get; set; }

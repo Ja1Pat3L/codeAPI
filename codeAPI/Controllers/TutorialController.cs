@@ -13,13 +13,23 @@ namespace codeAPI.Controllers
     [ApiController]
     public class TutorialController : ControllerBase
     {
+        /*Instances Created for Repository (codeRepository) and Auto Mapper (IMapper)*/
+        #region INSTANCES
         private IcodeRepository _codeRepository;
         private readonly IMapper _mapper;
+        #endregion
+
+        /*Class Constructor with above Instances as parameters*/
+        #region CONSTRUCTOR
         public TutorialController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
             _mapper = mapper;
         }
+        #endregion
+
+        /*Method- Getting List of Tutorials or Tutorial using Tutorial Is*/
+        #region GET TUTORIAL
         [HttpGet]
         [Route("/api/tutorials")]
         public async Task<IActionResult> GetTutorialInfo()
@@ -41,7 +51,10 @@ namespace codeAPI.Controllers
             var result = _mapper.Map<TutorialDto>(tutorialInfo);
             return Ok(result);
         }
+        #endregion
 
+        /*Method- Creating Tutorial*/
+        #region POST TUTORIAL
         [HttpPost("/api/newTutorial")]
         public async Task<ActionResult<TutorialDto>> CreateTutorial(
          [FromBody] TutorialForCreateDto tutorial)
@@ -70,6 +83,10 @@ namespace codeAPI.Controllers
 
             return CreatedAtAction("GetTutorialInfo", createdTutorial);
         }
+        #endregion
+
+        /*Method- Updating Tutorial using Tutorial Id */
+        #region PUT TUTORIAL
 
         [HttpPut("{id}/updatetutorial")]
         public async Task<ActionResult> UpdateTutorial( int id, [FromBody] TutorialForUpdateDto tutorial)
@@ -97,7 +114,10 @@ namespace codeAPI.Controllers
 
             return NoContent();
         }
+        #endregion
 
+        /*Method- Deleting Tutorial using Tutorial Id*/
+        #region DELETE TUTORIAL
 
         [HttpDelete("api/tutorial/{TutorialId}")]
         public async Task<IActionResult> DeleteTutorial( int TutorialId)
@@ -119,5 +139,6 @@ namespace codeAPI.Controllers
             return NoContent();
 
         }
+        #endregion
     }
 }
