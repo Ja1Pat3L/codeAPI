@@ -13,12 +13,13 @@ namespace codeAPI.Controllers
     [ApiController]
     public class TutorialCommentController : ControllerBase
     {
-
+        /*Instances Created for Repository (codeRepository) and Auto Mapper (IMapper)*/
         #region INSTANCES
         private IcodeRepository _codeRepository;
         private readonly IMapper _mapper;
         #endregion
 
+        /*Class Constructor with above Instances as parameters*/
         #region CONSTRUCTOR
         public TutorialCommentController(IcodeRepository codeRepository, IMapper mapper)
         {
@@ -27,6 +28,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
+        /*Method- Getting List of Comments for Tutorials using Tutorial Id*/
         #region GET COMMENT
         [HttpGet]
         [Route("/api/commentsfortutorial{tutorial_id}")]
@@ -40,8 +42,8 @@ namespace codeAPI.Controllers
         }
         #endregion
 
+        /*Method- Adding Comments*/
         #region POST COMMENT
-
         [HttpPost("/api/newcommentfortutorial")]
         public async Task<ActionResult<TutorialCommentDto>> CreateTutorialComment(
          [FromBody] TutorialCommentForCreateDto comment)
@@ -66,6 +68,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
+        /*Method- I think we dont need this*/
         #region PUT COMMENT
 
         /*Update not working error mapping */
@@ -94,6 +97,7 @@ namespace codeAPI.Controllers
 
         #endregion
 
+        /*Method- Delete Comment using Client Id and Tutorial Id*/
         #region DELETE COMMENT
         [HttpDelete("/api/comment/{client_id}/{tutorial_id}")]
         public async Task<IActionResult> DeleteTutorialComment(int client_id,int tutorial_id)

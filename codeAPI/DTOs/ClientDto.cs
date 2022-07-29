@@ -17,11 +17,5 @@ namespace codeAPI.DTOs
 
         public virtual Tutorial Tutorial { get; set; }
 
-        // public virtual Tutorial Tutorial { get; set; }
-
-      /*  public virtual ICollection<ClientDto> Clients { get; set; }
-       = new List<ClientDto>();
-*/
-
     }
 }

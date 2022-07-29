@@ -6,9 +6,10 @@ namespace codeAPI.Mappings
 {
     public class MappingProfile : Profile
     {
+
+        #region Mappings for DTO's and Classes
         public MappingProfile()
         {
-            //
             CreateMap<Tutorial, TutorialDto>();
             CreateMap<TutorialForCreateDto, Tutorial>();
             CreateMap<TutorialForUpdateDto, TutorialDto>();
@@ -27,6 +28,9 @@ namespace codeAPI.Mappings
             CreateMap < Client,ClientForCreateDto> ();        
         
         }
+        #endregion
+
+
     }
 }
                                                

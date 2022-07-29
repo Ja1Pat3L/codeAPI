@@ -13,9 +13,14 @@ namespace codeAPI.Controllers
     [ApiController]
     public class TutorialController : ControllerBase
     {
+        /*Instances Created for Repository (codeRepository) and Auto Mapper (IMapper)*/
         #region INSTANCES
         private IcodeRepository _codeRepository;
         private readonly IMapper _mapper;
+        #endregion
+
+        /*Class Constructor with above Instances as parameters*/
+        #region CONSTRUCTOR
         public TutorialController(IcodeRepository codeRepository, IMapper mapper)
         {
             _codeRepository = codeRepository;
@@ -23,7 +28,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
-
+        /*Method- Getting List of Tutorials or Tutorial using Tutorial Is*/
         #region GET TUTORIAL
         [HttpGet]
         [Route("/api/tutorials")]
@@ -48,7 +53,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
-
+        /*Method- Creating Tutorial*/
         #region POST TUTORIAL
         [HttpPost("/api/newTutorial")]
         public async Task<ActionResult<TutorialDto>> CreateTutorial(
@@ -80,7 +85,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
-
+        /*Method- Updating Tutorial using Tutorial Id */
         #region PUT TUTORIAL
 
         [HttpPut("{id}/updatetutorial")]
@@ -111,7 +116,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
-
+        /*Method- Deleting Tutorial using Tutorial Id*/
         #region DELETE TUTORIAL
 
         [HttpDelete("api/tutorial/{TutorialId}")]

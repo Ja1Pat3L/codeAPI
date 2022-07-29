@@ -15,7 +15,7 @@ namespace codeAPI.Controllers
     
     public class ClientTutorialController : ControllerBase
     {
-
+        /*Instances Created for Repository (codeRepository) and Auto Mapper (IMapper)*/
         #region INSTANCES
 
         private IcodeRepository _codeRepository;
@@ -24,6 +24,7 @@ namespace codeAPI.Controllers
 
         #endregion
 
+        /*Class Constructor with above Instances as parameters*/
         #region CONSTRUCTOR
         public ClientTutorialController(IcodeRepository codeRepository, IMapper mapper)
         {
@@ -32,6 +33,7 @@ namespace codeAPI.Controllers
         }
         #endregion
 
+        /*Method- Getting Tutorial using Client Id*/
         #region GET CLIENT TUTORIALS
 
         [HttpGet]
@@ -48,20 +50,17 @@ namespace codeAPI.Controllers
         }
         #endregion
 
+        /*Method- Creating Entity to store Client Id and Tutorial Id*/
         #region POST CLIENT TUTORIAL
         [HttpPost("/api/newClientTutorial")]
-
         public async Task<ActionResult<ClientTutorialDto>> AddClientTutorial(
             [FromBody]ClientTutorialForCreateDto client_tutorial
             
             ) {
 
             if (client_tutorial == null) return BadRequest();
-
          
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            /*   if (!await _cityInfoRepository.CityExists(cityId)) return NotFound();*/
 
             var finalTutorial = _mapper.Map<ClientTutorial>(client_tutorial);
 
@@ -75,20 +74,17 @@ namespace codeAPI.Controllers
             var createdClientTutorial = _mapper.Map<ClientTutorialDto>(finalTutorial);
 
             return Ok(createdClientTutorial);
-
         }
-
         #endregion
 
+        /*Method- Deleting Entity using Client Id and Tutorial Id*/
         #region DELETE CLIENT TUTORIAL
-        
             [HttpDelete("api/clienttutorial/{ClientId}/{TutorialId}")]
             public async Task<IActionResult> DeleteTutorial(int ClientId, int TutorialId)
             {
                
                 var tutorialEntity = await _codeRepository.GetClientTutorial(ClientId, TutorialId);
                 if (tutorialEntity == null) return NotFound();
-
 
                 _codeRepository.DeleteClientTutorial(tutorialEntity);
 
